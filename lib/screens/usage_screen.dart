@@ -20,7 +20,7 @@ class _UsageScreenState extends State<UsageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Water Usage Monitoring'),
+        title: const Text('Water Usage Monitoring'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -49,7 +49,7 @@ class _UsageScreenState extends State<UsageScreen> {
               }).toList(),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Chart Section
             Expanded(
@@ -75,16 +75,16 @@ class _UsageScreenState extends State<UsageScreen> {
                       isCurved: true,
                       color: Colors.blue[100],
                       barWidth: 4,
-                      belowBarData: BarAreaData(show: true, color: [
-                        Colors.blue.withOpacity(0.3),
-                      ]),
+                      // belowBarData: BarAreaData(show: true, color: [
+                      //   Colors.blue.withOpacity(0.3),
+                      // ]),
                     ),
                   ],
                 ),
               ),
             ),
 
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Usage Summary
             Text(
