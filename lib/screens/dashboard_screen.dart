@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+// import 'usage_screen.dart';
 import 'bill_payment_screen.dart'; // Import the BillPaymentScreen
 
 class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text(' Pure Waters Dashboard'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -17,32 +20,32 @@ class DashboardScreen extends StatelessWidget {
               // Welcome Banner
               _buildWelcomeBanner(),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Quick Actions
-              Text(
+              const Text(
                 'Quick Actions',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildQuickAction(context, Icons.attach_money, 'Pay Bill'),
                   _buildQuickAction(context, Icons.bar_chart, 'Usage'),
-                  _buildQuickAction(context, Icons.help, 'Support'),
+                  _buildQuickAction(context, Icons.help, 'Help & Support'),
                 ],
               ),
 
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Notifications Section
-              Text(
+              const Text(
                 'Notifications',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
-              Card(
+              const SizedBox(height: 8),
+              const Card(
                 elevation: 4,
                 child: ListTile(
                   leading: Icon(Icons.notification_important, color: Colors.blue),
@@ -66,7 +69,7 @@ class DashboardScreen extends StatelessWidget {
         color: Colors.blue,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -90,9 +93,15 @@ class DashboardScreen extends StatelessWidget {
         if (label == 'Pay Bill') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BillPaymentScreen()),
+            MaterialPageRoute(builder: (context) => const BillPaymentScreen()),
           );
         }
+        // if (label == 'Usage'){
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => UsageScreen()),
+        //   );
+        // }
         // Add more actions for other labels as needed
       },
       child: Column(
@@ -102,8 +111,8 @@ class DashboardScreen extends StatelessWidget {
             radius: 30,
             child: Icon(icon, size: 30, color: Colors.white),
           ),
-          SizedBox(height: 8),
-          Text(label, style: TextStyle(fontSize: 14)),
+          const SizedBox(height: 8),
+          Text(label, style: const TextStyle(fontSize: 14)),
         ],
       ),
     );

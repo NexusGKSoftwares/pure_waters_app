@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'payment_details_screen.dart';
 class BillPaymentScreen extends StatelessWidget {
+  const BillPaymentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
