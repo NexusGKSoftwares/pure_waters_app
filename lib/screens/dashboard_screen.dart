@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'AlertsScreen.dart';
-import 'HelpSupportScreen.dart';
+import 'alertsscreen.dart';
+import 'helpsupportscreen.dart';
 import 'bill_payment_screen.dart';
 import 'usage_screen.dart';
 
@@ -172,12 +172,15 @@ class DashboardScreen extends StatelessWidget {
       alignment: WrapAlignment.center,
       children: quickActions.map((action) {
         return _buildQuickAction(
-            context, action['icon'] as IconData, action['label'] as String);
+          context,
+          action['icon'] as IconData,
+          action['label'] as String,
+        );
       }).toList(),
     );
   }
 
-  // Quick Action Button Widget
+// Enhanced Quick Action Button Widget
   Widget _buildQuickAction(BuildContext context, IconData icon, String label) {
     return GestureDetector(
       onTap: () {
@@ -210,15 +213,36 @@ class DashboardScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 35,
-            child: Icon(icon, size: 30, color: Colors.blueAccent),
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Colors.blue, Colors.purple],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+              ],
+            ),
+            child: CircleAvatar(
+              backgroundColor: Colors.transparent,
+              radius: 35,
+              child: Icon(icon, size: 30, color: Colors.white),
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(fontSize: 14, color: Colors.white),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
