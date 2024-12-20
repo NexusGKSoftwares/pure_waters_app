@@ -10,13 +10,52 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent, // Full-page blue background
+      backgroundColor: Colors.blue[900], // Full-page blue background
       appBar: AppBar(
-        title: const Text('Pure Waters Dashboard'),
-        backgroundColor: Colors.blueAccent,
-        elevation: 0, // Removes shadow for a seamless look
+        title: const Text(
+          'Pure Waters Dashboard',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true, // Centers the title
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blueAccent, Colors.lightBlueAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search, color: Colors.white),
+            onPressed: () {
+              // Handle search action
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.notifications, color: Colors.white),
+            onPressed: () {
+              // Handle notifications action
+            },
+          ),
+        ],
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.white),
+          onPressed: () {
+            // Handle menu action
+          },
+        ),
+        elevation: 4, // Adds slight shadow for depth
+        shadowColor: Colors.lightBlueAccent.withOpacity(0.5), // Shadow color
       ),
-      body: SingleChildScrollView(
+
+
+        body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
