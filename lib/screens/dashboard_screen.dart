@@ -203,7 +203,7 @@ class DashboardScreen extends StatelessWidget {
         } else if (label == 'Alerts') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AlertsScreen()),
+            MaterialPageRoute(builder: (context) => const FaultReportingScreen()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
