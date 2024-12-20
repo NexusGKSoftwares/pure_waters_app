@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'usage_screen.dart';
 import 'bill_payment_screen.dart'; // Import the BillPaymentScreen
 
 class DashboardScreen extends StatelessWidget {
@@ -10,15 +9,6 @@ class DashboardScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pure Waters Dashboard'),
-        backgroundColor: Colors.blueAccent, // Updated to match branding
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to settings screen
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -36,8 +26,8 @@ class DashboardScreen extends StatelessWidget {
                 'Quick Actions',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 20),
-              _buildQuickActions(context), // Updated for responsive layout
+              const SizedBox(height: 16),
+              _buildQuickActions(context), // Updated Quick Actions Section
 
               const SizedBox(height: 24),
 
@@ -47,7 +37,14 @@ class DashboardScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              _buildNotificationsSection(),
+              const Card(
+                elevation: 4,
+                child: ListTile(
+                  leading: Icon(Icons.notification_important, color: Colors.blue),
+                  title: Text('Reminder: Your bill is due soon!'),
+                  subtitle: Text('Pay your outstanding bill before 15th Dec.'),
+                ),
+              ),
             ],
           ),
         ),
@@ -61,40 +58,27 @@ class DashboardScreen extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Colors.blueAccent,
+        color: Colors.blue,
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Row(
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 30,
-            child: Icon(Icons.person, color: Colors.blueAccent, size: 30),
+          Text(
+            'Welcome Back!',
+            style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome Back, Gideon!',
-                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Manage your water bills, monitor usage, and more.',
-                  style: TextStyle(fontSize: 14, color: Colors.white70),
-                ),
-              ],
-            ),
+          SizedBox(height: 8),
+          Text(
+            'Manage your water bills, monitor usage, and more.',
+            style: TextStyle(fontSize: 14, color: Colors.white70),
           ),
         ],
       ),
     );
   }
 
-  // Quick Actions Grid Widget
-// Quick Actions Section Widget
+  // Quick Actions Section Widget
   Widget _buildQuickActions(BuildContext context) {
     final quickActions = [
       {'icon': Icons.attach_money, 'label': 'Pay Bill'},
@@ -126,64 +110,21 @@ class DashboardScreen extends StatelessWidget {
         // Add more actions for other labels as needed
       },
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              decoration: const BoxDecoration(
-                color: Colors.blueAccent,
-                shape: BoxShape.circle,
-              ),
-              child: CircleAvatar(
-                backgroundColor: Colors.blueAccent,
-                radius: 40,
-                child: Icon(icon, size: 30, color: Colors.white),
-              ),
-            ),
+          CircleAvatar(
+            backgroundColor: Colors.blueAccent,
+            radius: 30, // Adjusted size
+            child: Icon(icon, size: 24, color: Colors.white), // Adjusted icon size
           ),
-          const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 14)),
+          const SizedBox(height: 6), // Adjusted spacing
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12), // Adjusted font size
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
-    );
-  }
-
-  // Notifications Section Widget
-  Widget _buildNotificationsSection() {
-    final notifications = [
-      {
-        'icon': Icons.notification_important,
-        'title': 'Reminder: Your bill is due soon!',
-        'subtitle': 'Pay your outstanding bill before 15th Dec.'
-      },
-      {
-        'icon': Icons.warning,
-        'title': 'Maintenance Scheduled',
-        'subtitle': 'Water supply will be disrupted on 20th Dec from 8 AM to 4 PM.'
-      },
-    ];
-
-    if (notifications.isEmpty) {
-      return const Center(
-        child: Text(
-          'No notifications at the moment.',
-          style: TextStyle(fontSize: 14, color: Colors.grey),
-        ),
-      );
-    }
-
-    return Column(
-      children: notifications.map((notification) {
-        return Card(
-          elevation: 4,
-          child: ListTile(
-            leading: Icon(notification['icon'] as IconData, color: Colors.blue),
-            title: Text(notification['title'] as String),
-            subtitle: Text(notification['subtitle'] as String),
-          ),
-        );
-      }).toList(),
     );
   }
 }
