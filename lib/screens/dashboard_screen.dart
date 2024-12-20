@@ -98,30 +98,59 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  // Welcome Banner Widget
+
+
   Widget _buildWelcomeBanner() {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.2), // Slight transparency for effect
-        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          colors: [Colors.blue.shade600, Colors.blue.shade300],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
       ),
-      child: const Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Welcome Back!',
-            style: TextStyle(
-              fontSize: 22,
+          CircleAvatar(
+            radius: 25,
+            backgroundColor: Colors.white.withOpacity(0.2),
+            child: const Icon(
+              Icons.water_drop_outlined,
               color: Colors.white,
-              fontWeight: FontWeight.bold,
+              size: 30,
             ),
           ),
-          SizedBox(height: 8),
-          Text(
-            'Manage your water bills, monitor usage, and more.',
-            style: TextStyle(fontSize: 16, color: Colors.white70),
+          const SizedBox(width: 16),
+          const Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Welcome Back!',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  'Manage your water bills, monitor usage, and more.',
+                  style: TextStyle(fontSize: 16, color: Colors.white70),
+                ),
+              ],
+            ),
           ),
         ],
       ),
