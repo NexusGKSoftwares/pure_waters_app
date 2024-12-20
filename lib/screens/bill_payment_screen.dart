@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'payment_details_screen.dart';
+
 class BillPaymentScreen extends StatelessWidget {
   const BillPaymentScreen({super.key});
 
@@ -8,7 +9,9 @@ class BillPaymentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bill Payment'),
+        backgroundColor: Colors.blueAccent, // AppBar matches the theme
       ),
+      backgroundColor: Colors.blue[900], // Deep blue background
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -17,23 +20,36 @@ class BillPaymentScreen extends StatelessWidget {
             // Outstanding Bill Section
             const Text(
               'Outstanding Bill',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 8),
-            const Card(
-              elevation: 4,
-              child: Padding(
+            Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Amount Due:',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       'Ksh 500',
-                      style: TextStyle(fontSize: 16, color: Colors.redAccent),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.redAccent,
+                      ),
                     ),
                   ],
                 ),
@@ -44,7 +60,11 @@ class BillPaymentScreen extends StatelessWidget {
             // Payment Methods Section
             const Text(
               'Select Payment Method',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 8),
             Expanded(
@@ -77,15 +97,34 @@ class BillPaymentScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentMethodTile(BuildContext context,
-      {required IconData icon, required String title, required String description}) {
+  Widget _buildPaymentMethodTile(
+      BuildContext context, {
+        required IconData icon,
+        required String title,
+        required String description,
+      }) {
     return Card(
       elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: ListTile(
-        leading: Icon(icon, size: 36, color: Colors.blue),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(description),
-        trailing: const Icon(Icons.arrow_forward),
+        leading: CircleAvatar(
+          backgroundColor: Colors.blue.withOpacity(0.2),
+          child: Icon(icon, size: 28, color: Colors.blue),
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        subtitle: Text(
+          description,
+          style: const TextStyle(fontSize: 14),
+        ),
+        trailing: const Icon(Icons.arrow_forward, color: Colors.blue),
         onTap: () {
           // Navigate to specific payment flow (e.g., M-Pesa)
           Navigator.push(

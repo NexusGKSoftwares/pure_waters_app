@@ -25,7 +25,9 @@ class _UsageScreenState extends State<UsageScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Water Usage Monitoring'),
+        backgroundColor: Colors.blueAccent, // AppBar matches the theme
       ),
+      backgroundColor: Colors.blue[900], // Deep blue background
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -44,12 +46,13 @@ class _UsageScreenState extends State<UsageScreen> {
                   child: Chip(
                     label: Text(period),
                     backgroundColor: selectedPeriod == period
-                        ? Colors.blue
+                        ? Colors.blueAccent
                         : Colors.grey[200],
                     labelStyle: TextStyle(
                       color: selectedPeriod == period
                           ? Colors.white
                           : Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 );
@@ -63,22 +66,35 @@ class _UsageScreenState extends State<UsageScreen> {
               child: ListView.builder(
                 itemCount: currentData.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blue,
-                      child: Text((index + 1).toString(),
-                          style: const TextStyle(color: Colors.white)),
+                  return Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    title: Text(
-                      selectedPeriod == 'Daily'
-                          ? 'Day ${index + 1}'
-                          : selectedPeriod == 'Weekly'
-                          ? 'Week ${index + 1}'
-                          : 'Month ${index + 1}',
-                    ),
-                    trailing: Text(
-                      '${currentData[index].toStringAsFixed(2)} liters',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.blueAccent,
+                        child: Text(
+                          (index + 1).toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      title: Text(
+                        selectedPeriod == 'Daily'
+                            ? 'Day ${index + 1}'
+                            : selectedPeriod == 'Weekly'
+                            ? 'Week ${index + 1}'
+                            : 'Month ${index + 1}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Text(
+                        '${currentData[index].toStringAsFixed(2)} liters',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -90,11 +106,16 @@ class _UsageScreenState extends State<UsageScreen> {
             // Usage Summary
             const Text(
               'Usage Summary',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               'Total water usage for the selected period: ${totalUsage.toStringAsFixed(2)} liters.',
+              style: const TextStyle(color: Colors.white70),
             ),
 
             const SizedBox(height: 8),
@@ -103,7 +124,7 @@ class _UsageScreenState extends State<UsageScreen> {
             if (totalUsage > 500)
               const Text(
                 '⚠️ High usage detected. Consider reducing your water usage.',
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(color: Colors.redAccent),
               ),
           ],
         ),

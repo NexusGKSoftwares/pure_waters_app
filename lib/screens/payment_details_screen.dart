@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PaymentDetailsScreen extends StatelessWidget {
   final String paymentMethod;
 
-  const PaymentDetailsScreen({required this.paymentMethod});
+  const PaymentDetailsScreen({super.key, required this.paymentMethod});
 
   @override
   Widget build(BuildContext context) {
