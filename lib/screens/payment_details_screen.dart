@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PaymentDetailsScreen extends StatelessWidget {
   final String paymentMethod;
 
-  PaymentDetailsScreen({required this.paymentMethod});
+  const PaymentDetailsScreen({required this.paymentMethod});
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +19,26 @@ class PaymentDetailsScreen extends StatelessWidget {
             // Payment Method Info
             Text(
               'You selected $paymentMethod.',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
 
             // Payment Details Form
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Account/Phone Number',
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
-            TextField(
+            const SizedBox(height: 16),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Amount',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Pay Now Button
             Center(
@@ -51,10 +51,10 @@ class PaymentDetailsScreen extends StatelessWidget {
                   );
                   Navigator.pop(context); // Return to previous screen
                 },
-                child: Text('Pay Now'),
+                child: const Text('Pay Now'),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                  textStyle: TextStyle(fontSize: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  textStyle: const TextStyle(fontSize: 16),
                 ),
               ),
             ),

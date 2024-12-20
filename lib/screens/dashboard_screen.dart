@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'bill_payment_screen.dart'; // Import the BillPaymentScreen
+import 'AlertsScreen.dart';
+import 'HelpSupportScreen.dart';
+import 'bill_payment_screen.dart';
+import 'usage_screen.dart'; // Import the BillPaymentScreen
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -40,7 +43,8 @@ class DashboardScreen extends StatelessWidget {
               const Card(
                 elevation: 4,
                 child: ListTile(
-                  leading: Icon(Icons.notification_important, color: Colors.blue),
+                  leading: Icon(
+                      Icons.notification_important, color: Colors.blue),
                   title: Text('Reminder: Your bill is due soon!'),
                   subtitle: Text('Pay your outstanding bill before 15th Dec.'),
                 ),
@@ -66,7 +70,8 @@ class DashboardScreen extends StatelessWidget {
         children: [
           Text(
             'Welcome Back!',
-            style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8),
           Text(
@@ -92,7 +97,8 @@ class DashboardScreen extends StatelessWidget {
       runSpacing: 16, // Vertical spacing between rows
       alignment: WrapAlignment.center, // Aligns all buttons to the center
       children: quickActions.map((action) {
-        return _buildQuickAction(context, action['icon'] as IconData, action['label'] as String);
+        return _buildQuickAction(
+            context, action['icon'] as IconData, action['label'] as String);
       }).toList(),
     );
   }
@@ -106,21 +112,42 @@ class DashboardScreen extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => const BillPaymentScreen()),
           );
+        } else if (label == 'Usage') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (
+                context) => const UsageScreen()), // Create this screen
+          );
+        } else if (label == 'Help & Support') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (
+                context) => const HelpSupportScreen()), // Create this screen
+          );
+        } else if (label == 'Alerts') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (
+                context) => const AlertsScreen()), // Create this screen
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Action for $label is not defined!')),
+          );
         }
-        // Add more actions for other labels as needed
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           CircleAvatar(
             backgroundColor: Colors.blueAccent,
-            radius: 30, // Adjusted size
-            child: Icon(icon, size: 24, color: Colors.white), // Adjusted icon size
+            radius: 30,
+            child: Icon(icon, size: 24, color: Colors.white),
           ),
-          const SizedBox(height: 6), // Adjusted spacing
+          const SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(fontSize: 12), // Adjusted font size
+            style: const TextStyle(fontSize: 12),
             textAlign: TextAlign.center,
           ),
         ],

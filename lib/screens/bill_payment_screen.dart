@@ -7,7 +7,7 @@ class BillPaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bill Payment'),
+        title: const Text('Bill Payment'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -15,15 +15,15 @@ class BillPaymentScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Outstanding Bill Section
-            Text(
+            const Text(
               'Outstanding Bill',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
-            Card(
+            const SizedBox(height: 8),
+            const Card(
               elevation: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -39,14 +39,14 @@ class BillPaymentScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Payment Methods Section
-            Text(
+            const Text(
               'Select Payment Method',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: ListView(
                 children: [
@@ -83,9 +83,9 @@ class BillPaymentScreen extends StatelessWidget {
       elevation: 4,
       child: ListTile(
         leading: Icon(icon, size: 36, color: Colors.blue),
-        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(description),
-        trailing: Icon(Icons.arrow_forward),
+        trailing: const Icon(Icons.arrow_forward),
         onTap: () {
           // Navigate to specific payment flow (e.g., M-Pesa)
           Navigator.push(

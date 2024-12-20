@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class UsageScreen extends StatefulWidget {
+  const UsageScreen({super.key});
+
   @override
   _UsageScreenState createState() => _UsageScreenState();
 }
@@ -9,7 +10,7 @@ class UsageScreen extends StatefulWidget {
 class _UsageScreenState extends State<UsageScreen> {
   String selectedPeriod = 'Daily'; // Default tab
 
-  // Mock data for graph (You can replace this with real data later)
+  // Mock data for usage (replace with real data later)
   final Map<String, List<double>> usageData = {
     'Daily': [10, 12, 8, 15, 18, 16, 14],
     'Weekly': [100, 120, 140, 110, 90, 80, 150],
@@ -18,6 +19,9 @@ class _UsageScreenState extends State<UsageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<double> currentData = usageData[selectedPeriod]!;
+    double totalUsage = currentData.reduce((a, b) => a + b);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Water Usage Monitoring'),
@@ -39,10 +43,13 @@ class _UsageScreenState extends State<UsageScreen> {
                   },
                   child: Chip(
                     label: Text(period),
-                    backgroundColor:
-                    selectedPeriod == period ? Colors.blue : Colors.grey[200],
+                    backgroundColor: selectedPeriod == period
+                        ? Colors.blue
+                        : Colors.grey[200],
                     labelStyle: TextStyle(
-                      color: selectedPeriod == period ? Colors.white : Colors.black,
+                      color: selectedPeriod == period
+                          ? Colors.white
+                          : Colors.black,
                     ),
                   ),
                 );
@@ -51,59 +58,53 @@ class _UsageScreenState extends State<UsageScreen> {
 
             const SizedBox(height: 16),
 
-            // Chart Section
+            // Usage Table
             Expanded(
-              child: LineChart(
-                LineChartData(
-                  gridData: FlGridData(show: true),
-                  titlesData: FlTitlesData(
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: true),
+              child: ListView.builder(
+                itemCount: currentData.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.blue,
+                      child: Text((index + 1).toString(),
+                          style: const TextStyle(color: Colors.white)),
                     ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: true),
+                    title: Text(
+                      selectedPeriod == 'Daily'
+                          ? 'Day ${index + 1}'
+                          : selectedPeriod == 'Weekly'
+                          ? 'Week ${index + 1}'
+                          : 'Month ${index + 1}',
                     ),
-                  ),
-                  borderData: FlBorderData(show: true),
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: usageData[selectedPeriod]!
-                          .asMap()
-                          .entries
-                          .map((e) => FlSpot(e.key.toDouble(), e.value))
-                          .toList(),
-                      isCurved: true,
-                      color: Colors.blue[100],
-                      barWidth: 4,
-                      // belowBarData: BarAreaData(show: true, color: [
-                      //   Colors.blue.withOpacity(0.3),
-                      // ]),
+                    trailing: Text(
+                      '${currentData[index].toStringAsFixed(2)} liters',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
 
             const SizedBox(height: 16),
 
             // Usage Summary
-            Text(
+            const Text(
               'Usage Summary',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(height: 8),
             Text(
-              'You have consumed ${usageData[selectedPeriod]!.reduce((a, b) => a + b).toStringAsFixed(2)} liters of water during the selected period.',
+              'Total water usage for the selected period: ${totalUsage.toStringAsFixed(2)} liters.',
             ),
 
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
 
             // High Usage Alert
-            if (usageData[selectedPeriod]!.reduce((a, b) => a + b) > 500) ...[
-              Text(
+            if (totalUsage > 500)
+              const Text(
                 '⚠️ High usage detected. Consider reducing your water usage.',
                 style: TextStyle(color: Colors.red),
               ),
-            ],
           ],
         ),
       ),
