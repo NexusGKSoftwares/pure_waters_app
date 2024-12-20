@@ -51,11 +51,11 @@ class PaymentDetailsScreen extends StatelessWidget {
                   );
                   Navigator.pop(context); // Return to previous screen
                 },
-                child: const Text('Pay Now'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                   textStyle: const TextStyle(fontSize: 16),
                 ),
+                child: const Text('Pay Now'),
               ),
             ),
           ],
