@@ -94,6 +94,7 @@ class DashboardScreen extends StatelessWidget {
   }
 
   // Quick Actions Grid Widget
+// Quick Actions Section Widget
   Widget _buildQuickActions(BuildContext context) {
     final quickActions = [
       {'icon': Icons.attach_money, 'label': 'Pay Bill'},
@@ -102,19 +103,13 @@ class DashboardScreen extends StatelessWidget {
       {'icon': Icons.notifications, 'label': 'Alerts'},
     ];
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2, // Adjust for responsiveness
-        mainAxisSpacing: 16,
-        crossAxisSpacing: 16,
-      ),
-      itemCount: quickActions.length,
-      itemBuilder: (context, index) {
-        final action = quickActions[index];
+    return Wrap(
+      spacing: 16, // Horizontal spacing between buttons
+      runSpacing: 16, // Vertical spacing between rows
+      alignment: WrapAlignment.center, // Aligns all buttons to the center
+      children: quickActions.map((action) {
         return _buildQuickAction(context, action['icon'] as IconData, action['label'] as String);
-      },
+      }).toList(),
     );
   }
 
