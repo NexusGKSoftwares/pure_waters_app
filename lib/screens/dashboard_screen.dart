@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'alertsscreen.dart';
-import 'helpsupportscreen.dart';
+import 'alerts_screen.dart';
+import 'help_support_screen.dart';
 import 'bill_payment_screen.dart';
 import 'usage_screen.dart';
 
@@ -10,7 +10,7 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[900], // Full-page blue background
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         title: const Text(
           'Pure Waters Dashboard',
@@ -20,7 +20,8 @@ class DashboardScreen extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        centerTitle: true, // Centers the title
+        centerTitle: true,
+        // Centers the title
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -50,12 +51,13 @@ class DashboardScreen extends StatelessWidget {
             // Handle menu action
           },
         ),
-        elevation: 4, // Adds slight shadow for depth
+        elevation: 4,
+        // Adds slight shadow for depth
         shadowColor: Colors.lightBlueAccent.withOpacity(0.5), // Shadow color
       ),
 
 
-        body: SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -97,7 +99,6 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
-
 
 
   Widget _buildWelcomeBanner() {
@@ -250,24 +251,66 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  // Notification Card Widget
+
   Widget _buildNotificationCard() {
     return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: Colors.white.withOpacity(0.2), // Semi-transparent white background
-      child: const ListTile(
-        leading: Icon(Icons.notification_important, color: Colors.white),
-        title: Text(
-          'Reminder: Your bill is due soon!',
-          style: TextStyle(color: Colors.white),
+      elevation: 6,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          gradient: const LinearGradient(
+            colors: [Colors.blueAccent, Colors.indigo],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
         ),
-        subtitle: Text(
-          'Pay your outstanding bill before 15th Dec.',
-          style: TextStyle(color: Colors.white70),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.white.withOpacity(0.3),
+              child: const Icon(
+                Icons.notification_important,
+                color: Colors.white,
+              ),
+            ),
+            title: const Text(
+              'Reminder: Your bill is due soon!',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            subtitle: const Text(
+              'Pay your outstanding bill before 15th Dec.',
+              style: TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+              ),
+            ),
+            trailing: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.3),
+              ),
+              child: const Icon(
+                Icons.chevron_right,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
-        trailing: Icon(Icons.chevron_right, color: Colors.white),
       ),
     );
   }
 }
+
