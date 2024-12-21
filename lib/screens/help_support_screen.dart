@@ -506,18 +506,122 @@ class _ContactFormState extends State<ContactForm> {
   }
 }
 
-class LiveChatScreen extends StatelessWidget {
+
+class LiveChatScreen extends StatefulWidget {
   const LiveChatScreen({super.key});
+
+  @override
+  _LiveChatScreenState createState() => _LiveChatScreenState();
+}
+
+class _LiveChatScreenState extends State<LiveChatScreen> {
+  final TextEditingController _messageController = TextEditingController();
+  final List<Map<String, String>> _messages = []; // List to store messages
+
+  void _sendMessage() {
+    if (_messageController.text.isNotEmpty) {
+      setState(() {
+        _messages.add({'sender': 'You', 'message': _messageController.text});
+      });
+      _messageController.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         title: const Text('Live Chat'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: const Center(
-        child: Text('Live chat interface will be displayed here.'),
+      body: Column(
+        children: [
+          // Chat Messages List
+          Expanded(
+            child: _messages.isNotEmpty
+                ? ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return Align(
+                  alignment: message['sender'] == 'You'
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 4, horizontal: 16),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: message['sender'] == 'You'
+                          ? Colors.blueAccent
+                          : Colors.grey[300],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '${message['sender']}: ${message['message']}',
+                      style: TextStyle(
+                        color: message['sender'] == 'You'
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )
+                : const Center(
+              child: Text(
+                'No messages yet. Start the conversation!',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ),
+          ),
+
+          // Message Input Section
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                // Input Field
+                Expanded(
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: InputDecoration(
+                      hintText: 'Type your message...',
+                      hintStyle: const TextStyle(color: Colors.white70),
+                      filled: true,
+                      fillColor: Colors.grey[800],
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                // Send Button
+                GestureDetector(
+                  onTap: _sendMessage,
+                  child: Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: const BoxDecoration(
+                      color: Colors.blueAccent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
