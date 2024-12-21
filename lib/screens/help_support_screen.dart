@@ -626,19 +626,130 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
     );
   }
 }
+//
+// import 'package:flutter/material.dart';
 
-class FeedbackScreen extends StatelessWidget {
+class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({super.key});
+
+  @override
+  _FeedbackScreenState createState() => _FeedbackScreenState();
+}
+
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  final TextEditingController _feedbackController = TextEditingController();
+  double _rating = 0; // Holds the rating value
+
+  void _submitFeedback() {
+    if (_feedbackController.text.isNotEmpty && _rating > 0) {
+      // You can replace this with a backend API call or Firebase integration
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Thank you for your feedback!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      _feedbackController.clear();
+      setState(() {
+        _rating = 0;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please provide feedback and a rating!'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         title: const Text('Feedback'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: const Center(
-        child: Text('Feedback form will be displayed here.'),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'We value your feedback!',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Rating Section
+            Row(
+              children: [
+                const Text(
+                  'Rate Us: ',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+                for (int i = 1; i <= 5; i++)
+                  IconButton(
+                    icon: Icon(
+                      Icons.star,
+                      color: i <= _rating ? Colors.yellow : Colors.grey[400],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _rating = i.toDouble();
+                      });
+                    },
+                  ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Feedback Text Field
+            TextField(
+              controller: _feedbackController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: 'Write your feedback here...',
+                hintStyle: const TextStyle(color: Colors.white70),
+                filled: true,
+                fillColor: Colors.grey[800],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 16),
+
+            // Submit Button
+            Center(
+              child: ElevatedButton(
+                onPressed: _submitFeedback,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12, horizontal: 24),
+                ),
+                child: const Text(
+                  'Submit Feedback',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
