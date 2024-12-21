@@ -2,24 +2,30 @@ import 'package:flutter/material.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/forgot_password.dart';
 import 'screens/login_screen.dart';
-import 'screens/register_screen.dart'; // Assuming you have this screen
+import 'screens/register_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const PureWatersApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PureWatersApp extends StatelessWidget {
+  const PureWatersApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/login', // Set initial route to login screen
+      debugShowCheckedModeBanner: false,
+      title: 'Pure Waters Organisation',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      initialRoute: '/login', // Set initial route to Login screen
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/forgot_password': (context) => const ForgotPasswordPage(),
-        '/dashboard': (context) => const DashboardScreen(), // Replace with actual screen
+        '/dashboard': (context) => const DashboardScreen(),
       },
     );
   }
