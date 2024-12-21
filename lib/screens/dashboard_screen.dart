@@ -164,7 +164,7 @@ class DashboardScreen extends StatelessWidget {
       {'icon': Icons.attach_money, 'label': 'Pay Bill'},
       {'icon': Icons.bar_chart, 'label': 'Usage'},
       {'icon': Icons.help, 'label': 'Help & Support'},
-      {'icon': Icons.notifications, 'label': 'Alerts'},
+      {'icon': Icons.warning, 'label': 'Faults'},
     ];
 
     return Wrap(
@@ -200,7 +200,7 @@ class DashboardScreen extends StatelessWidget {
             context,
             MaterialPageRoute(builder: (context) => const HelpSupportScreen()),
           );
-        } else if (label == 'Alerts') {
+        } else if (label == 'Faults') {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const FaultReportingScreen()),
