@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpSupportScreen extends StatelessWidget {
   const HelpSupportScreen({super.key});
@@ -293,18 +294,213 @@ class _FAQsScreenState extends State<FAQsScreen> {
 }
 
 
+
+// import 'package:flutter/material.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
+
+  void _launchURL(String url) async {
+    if (await canLaunchUrl(url as Uri)) {
+      await launchUrl(url as Uri);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       appBar: AppBar(
         title: const Text('Contact Us'),
         backgroundColor: Colors.blueAccent,
       ),
-      body: const Center(
-        child: Text('Contact information and form will be displayed here.'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Get in Touch with Pure Waters',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            // Phone Contact
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.phone, color: Colors.blueAccent),
+                title: const Text('Call Us'),
+                subtitle: const Text('+254 700 123 456'),
+                onTap: () {
+                  _launchURL('tel:+254700123456');
+                },
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Email Contact
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.email, color: Colors.blueAccent),
+                title: const Text('Email Us'),
+                subtitle: const Text('support@purewaters.com'),
+                onTap: () {
+                  _launchURL('mailto:support@purewaters.com');
+                },
+              ),
+            ),
+            const SizedBox(height: 8),
+            // Address Contact
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.location_on, color: Colors.blueAccent),
+                title: const Text('Visit Us'),
+                subtitle: const Text('456 Aqua Lane, Nairobi, Kenya'),
+                onTap: () {
+                  _launchURL(
+                      'https://www.google.com/maps/search/?api=1&query=456+Aqua+Lane+Nairobi+Kenya');
+                },
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              'Send Us a Message',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
+            // Contact Form
+            const ContactForm(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ContactForm extends StatefulWidget {
+  const ContactForm({super.key});
+
+  @override
+  _ContactFormState createState() => _ContactFormState();
+}
+
+class _ContactFormState extends State<ContactForm> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      // Replace with Pure Waters backend submission logic
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Message Sent'),
+          content: const Text(
+              'Thank you for reaching out to Pure Waters. We will get back to you shortly.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _nameController.clear();
+                _emailController.clear();
+                _messageController.clear();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: 'Name',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your name.';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'Email',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your email.';
+              }
+              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                return 'Please enter a valid email address.';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            controller: _messageController,
+            decoration: InputDecoration(
+              labelText: 'Message',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            maxLines: 4,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your message.';
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _submitForm,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+            ),
+            child: const Text(
+              'Submit',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
       ),
     );
   }
