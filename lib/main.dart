@@ -4,7 +4,7 @@ import 'screens/forgot_password.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 
-void main() {
+void main() {   
   runApp(const PureWatersApp());
 }
 

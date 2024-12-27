@@ -6,92 +6,138 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[50],
-      appBar: AppBar(
-        title: const Text('Login'),
-        backgroundColor: Colors.blueAccent,
-        elevation: 0, // Reduced elevation for a clean look
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(24.0), // Increased padding for cleaner space
-        child: SingleChildScrollView(
-          child: Center( // Center the content for balance
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 40),
-                const Text(
-                  'Welcome Back!',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _buildInputField(
-                  label: 'Email',
-                  icon: Icons.email,
-                  obscureText: false,
-                ),
-                const SizedBox(height: 16),
-                _buildInputField(
-                  label: 'Password',
-                  icon: Icons.lock,
-                  obscureText: true,
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to Dashboard after successful login
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/forgot_password');
-                  },
-                  child: const Text(
-                    'Forgot Password?',
-                    style: TextStyle(color: Colors.blueAccent),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  child: const Text(
-                    'Don’t have an account? Register',
-                    style: TextStyle(color: Colors.blueAccent),
-                  ),
-                ),
-              ],
+      body: Stack(
+        children: [
+          // Background Image
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/background.png'), // Path to your background image
+                fit: BoxFit.cover, // Ensure the image covers the screen
+              ),
             ),
           ),
-        ),
+          // Foreground Content
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 100), // Adjust spacing for the image
+                    const Text(
+                      'Welcome Back!',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white, // White text for visibility on the background
+                        shadows: [
+                          Shadow(
+                            color: Colors.black54,
+                            offset: Offset(2, 2),
+                            blurRadius: 4,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Text(
+                      'Log in to your account to continue',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70, // Slightly faded white for the subtitle
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    _buildInputField(
+                      label: 'Email',
+                      icon: Icons.email,
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInputField(
+                      label: 'Password',
+                      icon: Icons.lock,
+                      obscureText: true,
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/dashboard');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 5, // Button elevation for depth
+                      ),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/forgot_password');
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.white,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
+                      child: const Text.rich(
+                        TextSpan(
+                          text: "Don’t have an account? ",
+                          style: TextStyle(color: Colors.white70),
+                          children: [
+                            TextSpan(
+                              text: 'Register',
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildInputField({required String label, required IconData icon, required bool obscureText}) {
+  Widget _buildInputField({
+    required String label,
+    required IconData icon,
+    required bool obscureText,
+  }) {
     return TextField(
       obscureText: obscureText,
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: Colors.white.withOpacity(0.9), // Semi-transparent background
         labelText: label,
         labelStyle: const TextStyle(color: Colors.blueAccent),
         prefixIcon: Icon(icon, color: Colors.blueAccent),
