@@ -16,10 +16,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  bool _isLoading = false;  // Loading state flag
 
   // Function to register a new user
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;  // Set loading to true
+      });
+
       String name = _nameController.text;
       String email = _emailController.text;
       String password = _passwordController.text;
@@ -39,13 +44,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       final responseData = jsonDecode(response.body);
 
+      setState(() {
+        _isLoading = false;  // Set loading to false
+      });
+
       if (responseData['status'] == 'success') {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Account created successfully'),
           ),
         );
-        // Navigate to the dashboard after registration
+        // Navigate to the login screen after successful registration
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -141,7 +150,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
                               }
-                              // Add a basic email validation
                               if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                                 return 'Please enter a valid email';
                               }
@@ -202,7 +210,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(height: 24),
                           // Register button
                           ElevatedButton(
-                            onPressed: _register,
+                            onPressed: _isLoading ? null : _register,  // Disable when loading
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
@@ -211,7 +219,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               backgroundColor: Colors.blueAccent,
                               elevation: 5,
                             ),
-                            child: const Padding(
+                            child: _isLoading
+                                ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                                : const Padding(
                               padding: EdgeInsets.symmetric(
                                   vertical: 15, horizontal: 50),
                               child: Text(
