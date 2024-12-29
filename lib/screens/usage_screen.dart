@@ -134,7 +134,7 @@ class _UsageScreenState extends State<UsageScreen> {
             ),
             const SizedBox(height: 8),
             Text(
-              'Total water usage for ${selectedUnit}: ${totalUsage.toStringAsFixed(2)} liters.',
+              'Total water usage for $selectedUnit: ${totalUsage.toStringAsFixed(2)} liters.',
               style: const TextStyle(color: Colors.white70),
             ),
 

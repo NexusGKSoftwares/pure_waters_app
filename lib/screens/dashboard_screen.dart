@@ -5,7 +5,7 @@ import 'bill_payment_screen.dart';
 import 'usage_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({super.key, required userName, required userEmail});
 
   @override
   Widget build(BuildContext context) {
