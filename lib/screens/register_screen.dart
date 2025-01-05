@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -16,20 +18,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _confirmPasswordController =
   TextEditingController();
 
-  // Dummy register function
+  // Registration function to communicate with the PHP backend
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Registration successful!"),
-        ),
-      );
+      // Prepare data to send to the backend
+      final userData = {
+        'name': _nameController.text,
+        'email': _emailController.text,
+        'password': _passwordController.text,
+      };
 
-      // Navigate to Login Screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
+      try {
+        // Send POST request to the PHP backend
+        final response = await http.post(
+          Uri.parse('http://localhost/pure/register.php'),  // Your backend URL
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(userData),
+        );
+
+        // Check the response status
+        if (response.statusCode == 200) {
+          final responseData = json.decode(response.body);
+          if (responseData['message'] == 'Registration successful') {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Registration successful!")),
+            );
+
+            // Navigate to Login Screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(responseData['message'])),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Failed to register, try again later")),
+          );
+        }
+      } catch (e) {
+        print("Error: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Error occurred, please try again later")),
+        );
+      }
     }
   }
 

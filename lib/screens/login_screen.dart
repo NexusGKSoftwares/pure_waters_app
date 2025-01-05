@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     final response = await http.post(
-      Uri.parse('http://yourserver.com/login.php'),
+      Uri.parse('http://localhost/pure/login.php'),
       body: {
         'email': email,
         'password': password,
