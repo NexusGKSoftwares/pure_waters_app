@@ -34,19 +34,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Forgot Password'),
-        backgroundColor: Colors.blueAccent,
-      ),
       body: Stack(
         children: [
-          // Background image
+          // Gradient background
           Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                    'assets/background.jpg'), // Add your background image
-                fit: BoxFit.cover,
+              gradient: LinearGradient(
+                colors: [Color(0xFF6A11CB), Color(0xFF2575FC)], // Purple to Blue
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
             ),
           ),
@@ -78,19 +74,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               labelText: 'Enter your email',
                               labelStyle: const TextStyle(color: Colors.white),
                               filled: true,
-                              fillColor: Colors.black.withOpacity(0.5),
+                              fillColor: Colors.white.withOpacity(0.1),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 borderSide: BorderSide.none,
                               ),
-                              prefixIcon: const Icon(Icons.email, color: Colors.white),
+                              prefixIcon:
+                              const Icon(Icons.email, color: Colors.white),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your email';
                               }
                               // Add a basic email validation
-                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                              if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                  .hasMatch(value)) {
                                 return 'Please enter a valid email';
                               }
                               return null;
@@ -101,20 +99,30 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           ElevatedButton(
                             onPressed: _resetPassword,
                             style: ElevatedButton.styleFrom(
-                              foregroundColor: Colors.white,
+                              foregroundColor: Colors.blue,
+                              backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              backgroundColor: Colors.blueAccent,
-                              elevation: 5,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 50),
-                              child: Text(
-                                'Send Reset Link',
-                                style: TextStyle(fontSize: 18),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 50,
                               ),
+                            ),
+                            child: const Text(
+                              'Send Reset Link',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // Back to Login button
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text(
+                              'Back to Login',
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         ],
