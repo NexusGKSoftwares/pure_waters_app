@@ -22,8 +22,8 @@ class PureWatersApp extends StatelessWidget {
       ),
       initialRoute: '/login', // Set initial route to Login screen
       routes: {
-        '/login': (context) => const LoginScreen(),
-        '/register': (context) => const RegisterScreen(),
+        '/login': (context) => const LoginView(),
+        '/register': (context) => const SignUpView(),
         '/forgot_password': (context) => const ForgotPasswordScreen(),
         '/dashboard': (context) => const DashboardScreen(userName: null,userEmail: null,),
       },
